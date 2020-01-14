@@ -4,7 +4,7 @@ import "./style.css";
 function Nav() {
     return (
         <nav className="navbar navbar-expand-lg">
-            <a className="navbar-brand">Logo here</a>
+            <div className="navbar-brand">Logo here</div>
             <div className="collapse navbar-collapse show" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
