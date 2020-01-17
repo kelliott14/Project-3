@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default {
     login: function(username, password) {
-        return axios.post("/api/users/login", {username: username})
+        return axios.post("/api/users/login", {username: username, password: password})
     },
 
     deleteProfile: function(id) {
@@ -18,7 +18,7 @@ export default {
         return axios.get("/api/users/" + id)
     },
 
-    addPlant: function(plantData) {
-        return axios.post("/api/plants/create", plantData)
+    addPlant: function(id, plantData) {
+        return axios.post("/api/users/" + id, plantData)
     }
 };

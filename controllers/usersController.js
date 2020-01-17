@@ -13,16 +13,10 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    addPlant: function(req, res) {
-        db.User
-            .findOneAndUpdate({ _id: req.params.id },
-                {$push: {
-                    plants: req.body
-                }})
-    },
+
     findById: function(req, res) {
         db.User
-            .findById(req.params.id)
+            .findById(req.params.id).populate("plant")
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -32,5 +26,20 @@ module.exports = {
             .findOne({ username: req.body.username})
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
+    },
+
+    addPlant: function(req, res) {
+        db.Plant.create(req.body)
+            .then(dbPlant => {
+                return db.User.findOneAndUpdate(
+                    { _id: req.params.id},
+                       { $push: {
+                           plant: dbPlant.id },
+                },
+                    {new: true}
+                )
+                .then(dbUser => res.json(dbUser))
+                .catch(err => res.status(422).json(err))
+        })
     }
 }

@@ -5,10 +5,10 @@ const userSchema = new Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     profile_img: String,
-    plants: [{
+    plant: {
         type: Schema.Types.ObjectId,
         ref: "Plant"
-    }]
+    }
 });
 
 const User = mongoose.model("User", userSchema);

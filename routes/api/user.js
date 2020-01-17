@@ -9,7 +9,7 @@ router.route("/login")
 
 router.route("/:id")
     .get(userController.findById)
-    .post(userController.update)
+    .post(userController.addPlant)
     .put(userController.update);
 
 

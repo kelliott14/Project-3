@@ -36,7 +36,7 @@ class SignInForm extends Component {
         console.log("login clicked", this.state.logInUsername)
         API.login(this.state.logInUsername, this.state.logInPassword)
             .then(res => window.location.replace("/myaccount/" + res.data._id))
-        .catch(err => console.log("error"))
+        .catch(err => console.log(err))
     }
 
     render() {
