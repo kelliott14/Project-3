@@ -11,9 +11,6 @@ class MyAccount extends Component {
         plants: []
     };
 
-    
-
-
     render() {
         return (
             <div>

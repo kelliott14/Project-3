@@ -14,8 +14,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={FirstPage} />
-          <Route exact path="/myaccount" component={MyAccount} />
-          
+          <Route exact path="/myaccount/:id" component={MyAccount} />
           <Route component={NoMatch} />
         </Switch>
       </div>

@@ -10,13 +10,14 @@ class SignInForm extends Component {
         logInPassword: ""
     };
 
-    newUser = () => {
+    newUser = event => {
+        event.preventDefault();
         if (this.state.newUsername && this.state.newUsername) {
             API.createUser({
             username: this.state.newUsername,
             password: this.state.newPassword
         })
-        
+        .then(res => window.location.replace("/myaccount/" + res.data._id))
         .catch(err => console.log(err));
         } 
     }
@@ -28,6 +29,15 @@ class SignInForm extends Component {
           [name]: value
         });
       };
+
+    
+    handleFormSubmit = (event) => {
+        event.preventDefault();
+        console.log("login clicked", this.state.logInUsername)
+        API.login(this.state.logInUsername, this.state.logInPassword)
+            .then(res => window.location.replace("/myaccount/" + res.data._id))
+        .catch(err => console.log("error"))
+    }
 
     render() {
         return (
@@ -49,7 +59,8 @@ class SignInForm extends Component {
                                 name="logInPassword"
                                 type="input" className="form-control" id="Input"></input>
                         </div>
-                        <button type="submit" className="btn">log in</button>
+                        <button type="submit" className="btn"
+                                onClick={this.handleFormSubmit}>log in</button>
                     </form>
                     
                 </div>

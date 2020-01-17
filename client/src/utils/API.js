@@ -2,8 +2,8 @@ import axios from "axios";
 
 
 export default {
-    getUser: function(id) {
-        return axios.get("/api/users/" + id)
+    login: function(username, password) {
+        return axios.post("/api/users/login", {username: username})
     },
 
     deleteProfile: function(id) {
@@ -11,6 +11,14 @@ export default {
     },
 
     createUser: function(userData) {
-        return axios.post("/api/users", userData)
+        return axios.post("/api/users/create", userData)
+    },
+
+    getUserData: function(id) {
+        return axios.get("/api/users/" + id)
+    },
+
+    addPlant: function(plantData) {
+        return axios.post("/api/plants/create", plantData)
     }
 };
