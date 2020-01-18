@@ -9,6 +9,12 @@ import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+//External library React-Select for dropdown field
+import Select from 'react-select';
+
+//External library React Moment for date formatting
+import Moment from 'react-moment';
+
 
 class MyAccount extends Component {
     state = {
@@ -22,7 +28,12 @@ class MyAccount extends Component {
         newPlantCycle: "",
         newPlant: {},
         newPlantSpot: "",
-        newPlantFrom: ""
+        newPlantFrom: "",
+        selectedOption: null,
+        cycleOptions: [{ value: "daily", label: "daily"},
+                        {value: "weekly", label: "weekly"},
+                        {value: "fortnightly", label: "fortnightly"},
+                        {value: "monthly", label: "monthly"}]
     };
 
     handleChange = date => {
@@ -30,6 +41,10 @@ class MyAccount extends Component {
           startDate: date
         });
       };
+
+    handleDropdownChange = selectedOption => {
+        this.setState({ selectedOption });
+    }
 
     componentDidMount = () => {
         API.getUserData(this.props.match.params.id)
@@ -65,8 +80,8 @@ class MyAccount extends Component {
         let update = {
                         plant_name: this.state.newPlantName,
                         nickname: this.state.newPlantNickname,
-                        lastWatered: this.state.newPlantLastWatered,
-                        waterCycle: this.state.newPlantCycle,
+                        lastWatered: this.state.startDate,
+                        waterCycle: this.state.selectedOption.value,
                         spot: this.state.newPlantSpot,
                         from: this.state.newPlantFrom
                     }
@@ -95,14 +110,25 @@ class MyAccount extends Component {
         });
       };
 
-  
+      
     render() {
+        const { selectedOption } = this.state;
+        const calendarStrings = {
+            lastDay : '[Yesterday]',
+            sameDay : '[Today]',
+            nextDay : '[Tomorrow]',
+            lastWeek : '[last] dddd',
+            nextWeek : 'dddd',
+            sameElse : 'L'
+        };
+
         return (
-            
             <div>
                 <Jumbo header="My Profile"/>
                 <ProfileDetails username={this.state.username}/>
                 <Jumbo header="My plants"/>
+
+                {/* Plant name input */}
                 <div className="form-group">
                     <Label title="plant name"></Label>
                     <Input 
@@ -112,6 +138,8 @@ class MyAccount extends Component {
                         placeholder="eg. lemon tree"
                         />
                 </div>
+
+                {/* Plant nickname input */}
                 <div className="form-group">
                     <Label title="nickname"></Label>
                     <Input name="newPlantNickname"
@@ -120,6 +148,8 @@ class MyAccount extends Component {
                         placeholder="eg. Lemony Snickett"
                         type="input"/>
                 </div>
+
+                {/* Last Watered date input */}
                 <div className="form-group">
                     <Label title="last watered"></Label>
                     <DatePicker
@@ -130,15 +160,19 @@ class MyAccount extends Component {
                             dateFormat="dd/MM/yyyy"
                         />
                 </div>
+                
+                {/* Watering Cycle options */}
                 <div className="form-group">
                     <Label title="watering cycle"></Label>
-                    <Dropdown
-                        value={this.state.newPlantCycle}
-                        name="newPlantCycle"
-                        onChange={this.handleInputChange}>
-                        
-                    </Dropdown>
+                    <Select
+                        value={selectedOption}
+                        name="selectedOption"
+                        onChange={this.handleDropdownChange}
+                        options={this.state.cycleOptions}
+                        />
                 </div>
+
+                {/* From Input */}
                 <div className="form-group">
                     <Label title="from"></Label>
                     <Input name="newPlantFrom"
@@ -148,6 +182,7 @@ class MyAccount extends Component {
                         type="input"/>
                 </div>
 
+                {/* Spot Input */}
                 <div className="form-group">
                     <Label title="spot"></Label>
                     <Input name="newPlantSpot"
@@ -157,21 +192,30 @@ class MyAccount extends Component {
                         type="input"/>
                 </div>
 
-                    <Button
-                        onClick={this.addNewPlant}
-                        type="success"
-                        className="input-lg"
-                      >
-                        add
-                      </Button>
+                {/* Submit button to add plant */}
+                <Button
+                    onClick={this.addNewPlant}
+                    type="submit"
+                    className="input-lg"
+                    value="submit"
+                    >
+                    add
+                    </Button>
                
                       {this.state.plants.length > 0 ? (
                         this.state.plants.map((plant, index) => (
                             
                           <EachPlantOuter key={index}>
                               <EachPlantCardInner> 
-                              <div className="card-title">{plant.plant_name}</div>
-                            <div className="card-subtitle">{plant.nickname}</div></EachPlantCardInner>
+                                <div className="card-title">{plant.plant_name}</div>
+                                <div className="card-subtitle">{plant.nickname}</div>
+                                <div className="card-subtitle">last watered: 
+                                     <Moment calendar={calendarStrings}>{plant.lastWatered}</Moment>
+                                 </div>
+                                <div className="card-subtitle">{plant.waterCycle}</div>
+                                <div className="card-subtitle">{plant.from}</div>
+                                <div className="card-subtitle">{plant.spot}</div>   
+                            </EachPlantCardInner>
                           </EachPlantOuter>
                                    
                       ))) : (<h3>no results</h3>)}

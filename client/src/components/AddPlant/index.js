@@ -12,21 +12,17 @@ export function Label(props) {
 
 export function Input(props) {
     return (
-        <div className="input-group input-group-lg">
-          <input className="form-control" type="text" {...props} />
+        <div className="form-group">
+          <input className="form-control" {...props} />
         </div>
       );
 }
 
-export function Dropdown() {
-    return (<div>
-        <select className="form-control" id="dropDownSelecter">
-          <option>daily</option>
-          <option>weekly</option>
-          <option>fortnightly</option>
-          <option>monthly</option>
+export function Dropdown(props) {
+    return (
+        <select className="form-control" id="dropDownSelecter" {...props}>
         </select>
-    </div>);
+    );
 }
 
 export function Button({ type = "default", className, children, onClick }) {
