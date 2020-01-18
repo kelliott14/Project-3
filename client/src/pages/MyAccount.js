@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
-import { Input, Label, Button, Dropdown } from "../components/AddPlant";
+import { Input, Label, Button } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
 import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
@@ -30,10 +30,10 @@ class MyAccount extends Component {
         newPlantSpot: "",
         newPlantFrom: "",
         selectedOption: null,
-        cycleOptions: [{ value: "daily", label: "daily"},
-                        {value: "weekly", label: "weekly"},
-                        {value: "fortnightly", label: "fortnightly"},
-                        {value: "monthly", label: "monthly"}]
+        cycleOptions: [{ value: "daily", label: "daily", numValue: 1},
+                        {value: "weekly", label: "weekly", numValue: 7},
+                        {value: "fortnightly", label: "fortnightly", numValue: 7},
+                        {value: "monthly", label: "monthly", numValue: 7}]
     };
 
     handleChange = date => {
@@ -77,13 +77,18 @@ class MyAccount extends Component {
     };
 
     addNewPlant = () => {
+        console.log(this.state.startDate)
+       this.nextWater(this.state.startDate, this.state.selectedOption.numValue)
+
         let update = {
                         plant_name: this.state.newPlantName,
                         nickname: this.state.newPlantNickname,
                         lastWatered: this.state.startDate,
                         waterCycle: this.state.selectedOption.value,
+                        nextWater: this.state.selectedOption.numValue,
                         spot: this.state.newPlantSpot,
-                        from: this.state.newPlantFrom
+                        from: this.state.newPlantFrom,
+                        nextWaterDate: this.state.nextWaterFunction
                     }
         API.addPlant(this.state.id, update)
             .then(res => 
@@ -110,13 +115,23 @@ class MyAccount extends Component {
         });
       };
 
+    nextWater = (lastWatered, nextWater) => {
+        let thisMoment = new Date(lastWatered);
+        console.log(thisMoment)
+        thisMoment.setDate(thisMoment.getDate() + nextWater);
+
+        this.setState({
+            nextWaterFunction: thisMoment
+        })
+        console.log(thisMoment)
+    }
       
     render() {
         const { selectedOption } = this.state;
         const calendarStrings = {
-            lastDay : '[Yesterday]',
-            sameDay : '[Today]',
-            nextDay : '[Tomorrow]',
+            lastDay : '[yesterday]',
+            sameDay : '[today]',
+            nextDay : '[tomorrow]',
             lastWeek : '[last] dddd',
             nextWeek : 'dddd',
             sameElse : 'L'
@@ -200,23 +215,23 @@ class MyAccount extends Component {
                     value="submit"
                     >
                     add
-                    </Button>
+                </Button>
                
-                      {this.state.plants.length > 0 ? (
-                        this.state.plants.map((plant, index) => (
-                            
-                          <EachPlantOuter key={index}>
-                              <EachPlantCardInner> 
-                                <div className="card-title">{plant.plant_name}</div>
-                                <div className="card-subtitle">{plant.nickname}</div>
-                                <div className="card-subtitle">last watered: 
-                                     <Moment calendar={calendarStrings}>{plant.lastWatered}</Moment>
-                                 </div>
-                                <div className="card-subtitle">{plant.waterCycle}</div>
-                                <div className="card-subtitle">{plant.from}</div>
-                                <div className="card-subtitle">{plant.spot}</div>   
-                            </EachPlantCardInner>
-                          </EachPlantOuter>
+               {/* Display of each plant */}
+                {this.state.plants.length > 0 ? (
+                this.state.plants.map((plant, index) => (
+                    
+                    <EachPlantOuter key={index}>
+                        <EachPlantCardInner> 
+                        <div className="card-title">{plant.nickname} the {plant.plant_name}</div>
+                        <div className="card-subtitle">was last watered <Moment calendar={calendarStrings}>{plant.lastWatered}</Moment>
+                            </div>
+                        <div className="card-subtitle">and will need another water <Moment calendar={calendarStrings}>{plant.nextWaterDate}</Moment>
+                        </div>
+                        <div className="card-subtitle">{plant.from}</div>
+                        <div className="card-subtitle">{plant.spot}</div>   
+                    </EachPlantCardInner>
+                    </EachPlantOuter>
                                    
                       ))) : (<h3>no results</h3>)}
                       

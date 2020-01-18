@@ -8,7 +8,9 @@ const plantSchema = new Schema({
     from: String,
     img: String,
     lastWatered: {type: Date},
-    waterCycle: String
+    waterCycle: String,
+    nextWater: Number,
+    nextWaterDate: {type: Date}
 });
 
 const Plant = mongoose.model("Plant", plantSchema);
