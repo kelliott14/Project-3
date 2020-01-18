@@ -1,15 +1,16 @@
 import React from "react";
 import "./style.css";
 
-function EachPlant(props) {
+export function EachPlantOuter({ children}) {
     return (
-        <div className="card">
-            <div className="card-title">{props.name}</div>
-            <div className="card-subtitle">{props.nickname}</div>
-            <div className="card-text">Last watered: {}</div>
-            <div className="card-text">Next water: {}</div>
-        </div>
+        <div className="card" >{children}</div>
     )
 }
 
-export default EachPlant;
+export function EachPlantCardInner({children}) {
+    return (
+        
+            <div className="card-content">{children}</div>
+
+    )
+}

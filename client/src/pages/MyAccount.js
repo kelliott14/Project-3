@@ -3,7 +3,7 @@ import Jumbo from "../components/Jumbotron";
 import { Input, Label, Button } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
-import EachPlant from "../components/EachPlant";
+import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
 
 class MyAccount extends Component {
     state = {
@@ -37,10 +37,7 @@ class MyAccount extends Component {
                 plants: res.data.plants
             }))
             .catch(err => console.log(err));
-            var newArr = Object.keys(this.state.plants).map(key => {
-                return this.state.plants[key]
-            })
-            console.log(newArr)
+            
     }
 
     deleteProfile = (id) => {
@@ -57,16 +54,18 @@ class MyAccount extends Component {
         API.addPlant(this.state.id, update)
             .then(res => 
                 this.setState({
-                    username: res.data.username,
-                    id: res.data._id,
                     plants: res.data.plants
-                }),
-                this.loadPlants())
+                },
+                this.loadPlants(),
+                this.setState({
+                    newPlantName: "",
+                    newPlantNickname: ""
+                })))
             .catch(err => console.log(err))
     };
 
     handleInputChange = event => {
-        console.log(this.state.plants)
+        
         const { name, value } = event.target;
         this.setState({
           [name]: value
@@ -93,11 +92,12 @@ class MyAccount extends Component {
                 <div className="form-group">
                     <Label title="nickname"></Label>
                     <Input name="newPlantNickname"
-                        value={this.state.newPlant.nickname}
+                        value={this.state.newPlantNickname}
                         onChange={this.handleInputChange}
                         placeholder="enter a nick name"
                         type="input"/>
                 </div>
+                <div className=""></div>
                 <Button
                         onClick={this.addNewPlant}
                         type="success"
@@ -107,10 +107,14 @@ class MyAccount extends Component {
                       </Button>
                
                       {this.state.plants.length > 0 ? (
-                        this.state.plants.map(plant => (
-                          <EachPlant key={plant._id}
-                                    name={plant.plant_name}
-                                    nickname={plant.nickname}></EachPlant>
+                        this.state.plants.map((plant, index) => (
+                            
+                          <EachPlantOuter key={index}>
+                              <EachPlantCardInner> 
+                              <div className="card-title">{plant.plant_name}</div>
+                            <div className="card-subtitle">{plant.nickname}</div></EachPlantCardInner>
+                          </EachPlantOuter>
+                                   
                       ))) : (<h3>no results</h3>)}
                       
             </div>
