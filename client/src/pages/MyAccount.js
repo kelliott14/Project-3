@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
-import { Input, Label, Dropdown, Button } from "../components/AddPlant";
+import { Input, Label, Button } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
 import EachPlant from "../components/EachPlant";
@@ -9,7 +9,8 @@ class MyAccount extends Component {
     state = {
         username: "",
         id: "",
-        plants: {},
+        plants: [],
+        plantsArr: [],
         newPlantName: "",
         newPlantNickname: "",
         newPlant: {}
@@ -21,19 +22,25 @@ class MyAccount extends Component {
                 this.setState({
                 username: res.data.username,
                 id: res.data._id,
-                plants: res.data.plant
+                plants: res.data.plants
             }))
             .catch(err => console.log(err))
     };
 
     loadPlants = () => {
+        
         API.getUserData(this.state.id)
-            .then(res => this.setState({
+            .then(res => 
+                this.setState({
                 username: res.data.username,
                 id: res.data.id,
                 plants: res.data.plants
             }))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
+            var newArr = Object.keys(this.state.plants).map(key => {
+                return this.state.plants[key]
+            })
+            console.log(newArr)
     }
 
     deleteProfile = (id) => {
@@ -69,6 +76,7 @@ class MyAccount extends Component {
   
     render() {
         return (
+            
             <div>
                 <Jumbo header="My Profile"/>
                 <ProfileDetails username={this.state.username}/>
@@ -97,10 +105,13 @@ class MyAccount extends Component {
                       >
                         add
                       </Button>
-                      {this.state.plants ? (
-                        this.state.plants.forEach(function(plant) {
-                          return <EachPlant key={plant.id}>{plant.plant_name} </EachPlant>
-                      })) : (<h3>no results</h3>)}
+               
+                      {this.state.plants.length > 0 ? (
+                        this.state.plants.map(plant => (
+                          <EachPlant key={plant._id}
+                                    name={plant.plant_name}
+                                    nickname={plant.nickname}></EachPlant>
+                      ))) : (<h3>no results</h3>)}
                       
             </div>
   );
