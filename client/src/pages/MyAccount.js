@@ -1,28 +1,43 @@
 import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
-import { Input, Label, Button } from "../components/AddPlant";
+import { Input, Label, Button, Dropdown } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
 import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
 
+//External library DatePicker for calendar field
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
 class MyAccount extends Component {
     state = {
+        startDate: new Date(),
         username: "",
         id: "",
         plants: [],
-        plantsArr: [],
         newPlantName: "",
         newPlantNickname: "",
-        newPlant: {}
+        newPlantLastWatered: "",
+        newPlantCycle: "",
+        newPlant: {},
+        newPlantSpot: "",
+        newPlantFrom: ""
     };
+
+    handleChange = date => {
+        this.setState({
+          startDate: date
+        });
+      };
 
     componentDidMount = () => {
         API.getUserData(this.props.match.params.id)
             .then(res => 
                 this.setState({
-                username: res.data.username,
-                id: res.data._id,
-                plants: res.data.plants
+                    username: res.data.username,
+                    id: res.data._id,
+                    plants: res.data.plants
             }))
             .catch(err => console.log(err))
     };
@@ -49,7 +64,11 @@ class MyAccount extends Component {
     addNewPlant = () => {
         let update = {
                         plant_name: this.state.newPlantName,
-                        nickname: this.state.newPlantNickname
+                        nickname: this.state.newPlantNickname,
+                        lastWatered: this.state.newPlantLastWatered,
+                        waterCycle: this.state.newPlantCycle,
+                        spot: this.state.newPlantSpot,
+                        from: this.state.newPlantFrom
                     }
         API.addPlant(this.state.id, update)
             .then(res => 
@@ -59,13 +78,17 @@ class MyAccount extends Component {
                 this.loadPlants(),
                 this.setState({
                     newPlantName: "",
-                    newPlantNickname: ""
+                    newPlantNickname: "",
+                    newPlantLastWatered: "",
+                    newPlantCycle: "",
+                    newPlant: {},
+                    newPlantSpot: "",
+                    newPlantFrom: ""
                 })))
             .catch(err => console.log(err))
     };
 
     handleInputChange = event => {
-        
         const { name, value } = event.target;
         this.setState({
           [name]: value
@@ -86,7 +109,7 @@ class MyAccount extends Component {
                         name="newPlantName"
                         value={this.state.newPlantName}
                         onChange={this.handleInputChange}
-                        placeholder="enter the plant name"
+                        placeholder="eg. lemon tree"
                         />
                 </div>
                 <div className="form-group">
@@ -94,11 +117,47 @@ class MyAccount extends Component {
                     <Input name="newPlantNickname"
                         value={this.state.newPlantNickname}
                         onChange={this.handleInputChange}
-                        placeholder="enter a nick name"
+                        placeholder="eg. Lemony Snickett"
                         type="input"/>
                 </div>
-                <div className=""></div>
-                <Button
+                <div className="form-group">
+                    <Label title="last watered"></Label>
+                    <DatePicker
+                            name="newPlantLastWatered"
+                            selected={this.state.startDate}
+                            onChange={this.handleChange}
+                            value={this.state.startDate}
+                            dateFormat="dd/MM/yyyy"
+                        />
+                </div>
+                <div className="form-group">
+                    <Label title="watering cycle"></Label>
+                    <Dropdown
+                        value={this.state.newPlantCycle}
+                        name="newPlantCycle"
+                        onChange={this.handleInputChange}>
+                        
+                    </Dropdown>
+                </div>
+                <div className="form-group">
+                    <Label title="from"></Label>
+                    <Input name="newPlantFrom"
+                        value={this.state.newPlantFrom}
+                        onChange={this.handleInputChange}
+                        placeholder="eg. nursery name or grafted from plant"
+                        type="input"/>
+                </div>
+
+                <div className="form-group">
+                    <Label title="spot"></Label>
+                    <Input name="newPlantSpot"
+                        value={this.state.newPlantSpot}
+                        onChange={this.handleInputChange}
+                        placeholder="eg. loungeroom window"
+                        type="input"/>
+                </div>
+
+                    <Button
                         onClick={this.addNewPlant}
                         type="success"
                         className="input-lg"

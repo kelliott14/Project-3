@@ -6,7 +6,9 @@ const plantSchema = new Schema({
     nickname: String,
     spot: String,
     from: String,
-    img: String
+    img: String,
+    lastWatered: {type: Date},
+    waterCycle: String
 });
 
 const Plant = mongoose.model("Plant", plantSchema);

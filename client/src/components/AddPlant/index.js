@@ -18,8 +18,15 @@ export function Input(props) {
       );
 }
 
-export function Dropdown({ fluid, children }) {
-    return <div></div>
+export function Dropdown() {
+    return (<div>
+        <select className="form-control" id="dropDownSelecter">
+          <option>daily</option>
+          <option>weekly</option>
+          <option>fortnightly</option>
+          <option>monthly</option>
+        </select>
+    </div>);
 }
 
 export function Button({ type = "default", className, children, onClick }) {
@@ -29,3 +36,5 @@ export function Button({ type = "default", className, children, onClick }) {
       </button>
     );
   }
+
+
