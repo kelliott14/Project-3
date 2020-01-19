@@ -20,5 +20,9 @@ export default {
 
     addPlant: function(id, plantData) {
         return axios.post("/api/users/" + id, plantData)
+    },
+
+    updatePlant: function(id, plantData) {
+        return axios.post("/api/plants/" + id, plantData)
     }
 };

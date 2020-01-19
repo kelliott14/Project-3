@@ -26,26 +26,28 @@ class MyAccount extends Component {
         newPlantNickname: "",
         newPlantLastWatered: "",
         newPlantCycle: "",
-        newPlant: {},
         newPlantSpot: "",
         newPlantFrom: "",
         selectedOption: null,
         cycleOptions: [{ value: "daily", label: "daily", numValue: 1},
                         {value: "weekly", label: "weekly", numValue: 7},
-                        {value: "fortnightly", label: "fortnightly", numValue: 7},
-                        {value: "monthly", label: "monthly", numValue: 7}]
+                        {value: "fortnightly", label: "fortnightly", numValue: 14},
+                        {value: "monthly", label: "monthly", numValue: 30}]
     };
 
+    //handle change for startdate field
     handleChange = date => {
         this.setState({
           startDate: date
         });
       };
 
+    //handle change for dropdown field
     handleDropdownChange = selectedOption => {
         this.setState({ selectedOption });
     }
 
+    //on load of page
     componentDidMount = () => {
         API.getUserData(this.props.match.params.id)
             .then(res => 
@@ -53,49 +55,58 @@ class MyAccount extends Component {
                     username: res.data.username,
                     id: res.data._id,
                     plants: res.data.plants
-            }))
+            }, console.log(this.state)))
             .catch(err => console.log(err))
     };
 
+    //load plants from user into state
     loadPlants = () => {
-        
-        API.getUserData(this.state.id)
+        console.log(this.state.id)
+        API.getUserData(this.props.match.params.id)
             .then(res => 
                 this.setState({
                 username: res.data.username,
                 id: res.data.id,
                 plants: res.data.plants
-            }))
-            .catch(err => console.log(err));
+            }, console.log(this.state)))
+            .catch(err => console.log(err), console.log(this.state));
             
     }
 
+    //delete user's profile
     deleteProfile = (id) => {
         API.deleteProfile(id)
             .then(res => this.componentDidMount())
             .catch(err => console.log(err))
     };
 
-    addNewPlant = () => {
-        console.log(this.state.startDate)
-       this.nextWater(this.state.startDate, this.state.selectedOption.numValue)
-
-        let update = {
-                        plant_name: this.state.newPlantName,
-                        nickname: this.state.newPlantNickname,
-                        lastWatered: this.state.startDate,
-                        waterCycle: this.state.selectedOption.value,
-                        nextWater: this.state.selectedOption.numValue,
-                        spot: this.state.newPlantSpot,
-                        from: this.state.newPlantFrom,
-                        nextWaterDate: this.state.nextWaterFunction
-                    }
-        API.addPlant(this.state.id, update)
+    //add plant to db
+    addNewPlant = (event) => {
+        event.preventDefault();
+        //sets the next water date into a variable thisMoment
+        let thisMoment = new Date(this.state.startDate);
+        thisMoment.setDate(thisMoment.getDate() + this.state.selectedOption.numValue);
+        
+        //sets the new plant details into a variable plantToAdd
+        let plantToAdd = {
+            plant_name: this.state.newPlantName,
+            nickname: this.state.newPlantNickname,
+            lastWatered: this.state.startDate,
+            waterCycle: this.state.selectedOption.value,
+            nextWater: this.state.selectedOption.numValue,
+            spot: this.state.newPlantSpot,
+            from: this.state.newPlantFrom,
+            nextWaterDate: thisMoment
+        };
+        //adds the plantToAdd variable to the db
+        API.addPlant(this.props.match.params.id, plantToAdd)
             .then(res => 
                 this.setState({
                     plants: res.data.plants
                 },
+                //reloads the plants with the new response post db update
                 this.loadPlants(),
+                //resets the the state to blank
                 this.setState({
                     newPlantName: "",
                     newPlantNickname: "",
@@ -106,8 +117,10 @@ class MyAccount extends Component {
                     newPlantFrom: ""
                 })))
             .catch(err => console.log(err))
+
     };
 
+    //handle input change on input fields
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
@@ -115,25 +128,36 @@ class MyAccount extends Component {
         });
       };
 
-    nextWater = (lastWatered, nextWater) => {
-        let thisMoment = new Date(lastWatered);
-        console.log(thisMoment)
-        thisMoment.setDate(thisMoment.getDate() + nextWater);
-
-        this.setState({
-            nextWaterFunction: thisMoment
-        })
-        console.log(thisMoment)
+    //changes the last watered and next watered dates in db
+    waterPlant = (event, id, waterCycle) => {
+        event.preventDefault();
+        let thisMoment = new Date();
+        console.log(waterCycle)
+        thisMoment.setDate(thisMoment.getDate() + waterCycle);
+        
+        let dateUpdate = {
+            nextWaterDate: thisMoment,
+            lastWatered: new Date()
+        };
+        
+        API.updatePlant(id, dateUpdate)
+            .then(res => console.log(res),
+            
+                this.loadPlants()
+                )
+            .catch(err => console.log(err))
     }
-      
+    
+    //page render
     render() {
         const { selectedOption } = this.state;
         const calendarStrings = {
             lastDay : '[yesterday]',
             sameDay : '[today]',
             nextDay : '[tomorrow]',
+            thisWeek : 'dddd',
             lastWeek : '[last] dddd',
-            nextWeek : 'dddd',
+            nextWeek : '[next] dddd',
             sameElse : 'L'
         };
 
@@ -209,10 +233,10 @@ class MyAccount extends Component {
 
                 {/* Submit button to add plant */}
                 <Button
-                    onClick={this.addNewPlant}
-                    type="submit"
+                    onClick={(event) => this.addNewPlant(event)}
+                    // type="submit"
                     className="input-lg"
-                    value="submit"
+                    // role="button"
                     >
                     add
                 </Button>
@@ -223,6 +247,12 @@ class MyAccount extends Component {
                     
                     <EachPlantOuter key={index}>
                         <EachPlantCardInner> 
+                            <Button
+                                onClick={(event) => this.waterPlant(event, plant._id, plant.nextWater)}
+                                // type="submit"
+                                className='input-lg'
+                                // value="submit"
+                                >watered</Button>
                         <div className="card-title">{plant.nickname} the {plant.plant_name}</div>
                         <div className="card-subtitle">was last watered <Moment calendar={calendarStrings}>{plant.lastWatered}</Moment>
                             </div>
