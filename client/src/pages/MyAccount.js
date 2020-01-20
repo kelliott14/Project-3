@@ -4,6 +4,7 @@ import { Input, Label, Button } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
 import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
+import axios from "axios";
 
 //External library DatePicker for calendar field
 import DatePicker from "react-datepicker";
@@ -14,7 +15,6 @@ import Select from 'react-select';
 
 //External library React Moment for date formatting
 import Moment from 'react-moment';
-
 
 class MyAccount extends Component {
     state = {
@@ -28,6 +28,7 @@ class MyAccount extends Component {
         newPlantCycle: "",
         newPlantSpot: "",
         newPlantFrom: "",
+        newPlantImage: null,
         selectedOption: null,
         cycleOptions: [{ value: "daily", label: "daily", numValue: 1},
                         {value: "weekly", label: "weekly", numValue: 7},
@@ -86,7 +87,10 @@ class MyAccount extends Component {
         //sets the next water date into a variable thisMoment
         let thisMoment = new Date(this.state.startDate);
         thisMoment.setDate(thisMoment.getDate() + this.state.selectedOption.numValue);
-        
+
+        const fd = new FormData();
+        fd.append('image', this.state.newPlantImage, this.state.newPlantImage.name)
+        console.log(fd);
         //sets the new plant details into a variable plantToAdd
         let plantToAdd = {
             plant_name: this.state.newPlantName,
@@ -96,7 +100,8 @@ class MyAccount extends Component {
             nextWater: this.state.selectedOption.numValue,
             spot: this.state.newPlantSpot,
             from: this.state.newPlantFrom,
-            nextWaterDate: thisMoment
+            nextWaterDate: thisMoment,
+            img: fd
         };
         //adds the plantToAdd variable to the db
         API.addPlant(this.props.match.params.id, plantToAdd)
@@ -147,6 +152,15 @@ class MyAccount extends Component {
                 )
             .catch(err => console.log(err))
     }
+
+    //file selected handler
+    fileSelectedListener = event => {
+        this.setState({
+            newPlantImage: event.target.files[0]
+        })
+    }
+
+    
     
     //page render
     render() {
@@ -229,6 +243,12 @@ class MyAccount extends Component {
                         onChange={this.handleInputChange}
                         placeholder="eg. loungeroom window"
                         type="input"/>
+                </div>
+
+                {/* img upload input */}
+                <div className="form-group">
+                    <Label title="upload an image"></Label>
+                    <Input type="file" onChange={this.fileSelectedListener}></Input>
                 </div>
 
                 {/* Submit button to add plant */}

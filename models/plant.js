@@ -6,11 +6,14 @@ const plantSchema = new Schema({
     nickname: String,
     spot: String,
     from: String,
-    img: String,
     lastWatered: {type: Date},
     waterCycle: String,
     nextWater: Number,
-    nextWaterDate: {type: Date}
+    nextWaterDate: {type: Date},
+    img: { data: Buffer, contentType: String}
+    }, 
+    {
+    timestamps: true
 });
 
 const Plant = mongoose.model("Plant", plantSchema);
