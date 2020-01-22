@@ -4,6 +4,7 @@ const gcs = new Storage({
     projectId: 'project-3-285fb'})
 const os = require('os');
 const path = require('path');
+const spawn = require('child-process-promise').spawn;
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -16,7 +17,12 @@ exports.onImageChange = functions.storage.object().onFinalize(event => {
 
     console.log("file change detected, function execution started")
 
-    if (path.basename(filePath).startsWith('rename-')) {
+    if (object.resourceState === "not_exists") {
+        console.log("we deleted a file");
+        return;
+    }
+
+    if (path.basename(filePath).startsWith('resized-')) {
         console.log("we already named that file")
         return;
     }
@@ -30,9 +36,13 @@ exports.onImageChange = functions.storage.object().onFinalize(event => {
     return destBucket.file(filePath).download({
         destination: tmpFilePath
     }).then(() => {
-        return destBucket.upload(tmpFilePath, {
-            destination: 'rename-' + path.basename(filePath),
-            metadata: metadata
+        return spawn('convert', [tmpFilePath, '--resize', '500x500', tmpFilePath])
+            .then(() => {
+                return destBucket.upload(tmpFilePath, {
+                    destination: 'resized-' + path.basename(filePath),
+                    metadata: metadata
+            })
+        
         })
     });
 });

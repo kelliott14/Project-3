@@ -1,11 +1,19 @@
 .jumbotron{
     text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #F6F2F5;
     margin-bottom: 0px;
 }
 
-.header{
+.profileName{
     color: #5cb49b;
     text-align: left;
+    font-size: 3rem;
+    font-family: 'Paytone One', sans-serif;
+}
+
+.ohHello{
+    color: black;
+    text-align: left;
+    font-size: 3rem;
+    font-family: 'Pacifico', cursive;
 }

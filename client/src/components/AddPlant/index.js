@@ -1,6 +1,13 @@
 import React from "react";
 import "./style.css";
 
+export function AddPlantContainer({children}) {
+  return (
+    <div className="addPlantContainer">{children}</div>
+  )
+}
+
+
 export function Label(props) {
     return (
         <div className="input-group input-group-lg">
@@ -33,4 +40,14 @@ export function Button({ type = "default", className, children, onClick }) {
     );
   }
 
+export function MovingButton(props) {
+  return (
+    <div className={props.className}>
+    <div className="circle" onClick={props.onClick}>
+      <div className="text">{props.text}</div>
+      <div className="arrow">V</div>
+    </div>
+    </div>
+  )
+}
 

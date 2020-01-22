@@ -1,4 +1,53 @@
-.bookSearch{
-    text-align: left;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+.circle {
+    width: 4rem;
+    height: 4.5rem;
+    padding-right: 0.5rem;
+    background-color: #5cb49b;
+    border-radius: 60px;
+    color: white;
+    position: relative;
+    overflow: hidden; 
+    transition: width 0.4s ease-in;
+    cursor: pointer;
+  }
+  
+  .circle:hover {
+    width: 11rem;
+  }
+
+  .arrow {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+    top: 50%;
+    right: 30px;
+    transform: translate(50%, -50%);
+  }
+
+  .text {
+    position: absolute;
+    top: 50%;
+    right: 4rem;
+    padding-left: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transform: translateY(-50%);
+  }
+
+.addPlantContainer {
+    padding: 1rem;
+    text-align: center;
+    background-color: #5cb49b;
+    font: white;
+}
+
+.form-control,
+input,
+.css-yk16xz-control{
+    border-radius: 1rem;
+}
+
+.movingButton {
+    background-color: #F6F2F5;
+    padding-bottom: 0.25rem;
 }

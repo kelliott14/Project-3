@@ -14,3 +14,9 @@ export function EachPlantCardInner({children}) {
 
     )
 }
+
+export function PlantsContainer({children}) {
+    return (
+      <div className="plantsContainer">{children}</div>
+    )
+  }

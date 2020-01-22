@@ -41,10 +41,10 @@ class SignInForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className="signInForm">
                 <div className="jumbotron">
-                    <form>
-                        <h2 className="header">log in</h2>
+                    <form className="logInForm">
+                        <h2 className="loginHeader">log in to an existing account</h2>
                         <div className="form-group">
                             <label>username</label>
                             <input value={this.state.logInUsername}
@@ -57,7 +57,7 @@ class SignInForm extends Component {
                             <input value={this.state.logInPassword}
                                 onChange={this.handleInputChange}
                                 name="logInPassword"
-                                type="input" className="form-control" id="Input"></input>
+                                type="password" className="form-control" id="Input"></input>
                         </div>
                         <button type="submit" className="btn"
                                 onClick={this.handleFormSubmit}>log in</button>
@@ -65,8 +65,8 @@ class SignInForm extends Component {
                     
                 </div>
                 <div className="jumbotron">
-                <form>
-                    <h2 className="header">create a new user</h2>
+                <form className="createUserForm">
+                    <h2 className="loginHeader">create a new account</h2>
                     <div className="form-group">
                         <label>username</label>
                         <input value={this.state.newUsername}
@@ -79,7 +79,7 @@ class SignInForm extends Component {
                         <input value={this.state.newPassword}
                                 onChange={this.handleInputChange}
                                 name="newPassword"
-                                type="input" className="form-control" id="newPasswordInput"></input>
+                                type="password" className="form-control" id="newPasswordInput"></input>
                     </div>
                     <button type="submit" className="btn" 
                         onClick={this.newUser}>create</button>

@@ -14,7 +14,7 @@ class MyAccount extends Component {
     render() {
         return (
             <div>
-                <Jumbo header="Welcome to plant saver"/>
+                <Jumbo header="Welcome to plant saver."/>
                 <SignInForm></SignInForm>
             </div>
   );

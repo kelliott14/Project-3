@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
-import { Input, Label, Button } from "../components/AddPlant";
+import { Input, Label, Button, MovingButton, AddPlantContainer } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
-import { EachPlantOuter, EachPlantCardInner } from "../components/EachPlant";
-import axios from "axios";
+import { EachPlantOuter, EachPlantCardInner, PlantsContainer } from "../components/EachPlant";
+// import axios from "axios";
 
 //External library DatePicker for calendar field
 import DatePicker from "react-datepicker";
@@ -19,6 +19,7 @@ import Moment from 'react-moment';
 class MyAccount extends Component {
     state = {
         startDate: new Date(),
+        addPlantFormState: false,
         username: "",
         id: "",
         plants: [],
@@ -160,6 +161,17 @@ class MyAccount extends Component {
         })
     }
 
+    //toggle the add plant form to collapse or display
+    toggleAddPlant = () => {
+        this.state.addPlantFormState ?
+             this.setState({
+                addPlantFormState: false
+            })
+        :
+             this.setState({
+                addPlantFormState: true
+            })
+    }
     
     
     //page render
@@ -181,90 +193,100 @@ class MyAccount extends Component {
                 <ProfileDetails username={this.state.username}/>
                 <Jumbo header="My plants"/>
 
-                {/* Plant name input */}
-                <div className="form-group">
-                    <Label title="plant name"></Label>
-                    <Input 
-                        name="newPlantName"
-                        value={this.state.newPlantName}
-                        onChange={this.handleInputChange}
-                        placeholder="eg. lemon tree"
-                        />
-                </div>
-
-                {/* Plant nickname input */}
-                <div className="form-group">
-                    <Label title="nickname"></Label>
-                    <Input name="newPlantNickname"
-                        value={this.state.newPlantNickname}
-                        onChange={this.handleInputChange}
-                        placeholder="eg. Lemony Snickett"
-                        type="input"/>
-                </div>
-
-                {/* Last Watered date input */}
-                <div className="form-group">
-                    <Label title="last watered"></Label>
-                    <DatePicker
-                            name="newPlantLastWatered"
-                            selected={this.state.startDate}
-                            onChange={this.handleChange}
-                            value={this.state.startDate}
-                            dateFormat="dd/MM/yyyy"
-                        />
-                </div>
+                <MovingButton className="movingButton" onClick={this.toggleAddPlant} text="Add a plant"></MovingButton>
                 
-                {/* Watering Cycle options */}
-                <div className="form-group">
-                    <Label title="watering cycle"></Label>
-                    <Select
-                        value={selectedOption}
-                        name="selectedOption"
-                        onChange={this.handleDropdownChange}
-                        options={this.state.cycleOptions}
-                        />
-                </div>
+                {this.state.addPlantFormState ? 
+                    <AddPlantContainer className={this.state.addPlantFormState}>
+                    {/* Plant name input */}
+                    <div className="form-group">
+                        <Label title="plant name"></Label>
+                        <Input 
+                            name="newPlantName"
+                            value={this.state.newPlantName}
+                            onChange={this.handleInputChange}
+                            placeholder="eg. lemon tree"
+                            />
+                    </div>
 
-                {/* From Input */}
-                <div className="form-group">
-                    <Label title="from"></Label>
-                    <Input name="newPlantFrom"
-                        value={this.state.newPlantFrom}
-                        onChange={this.handleInputChange}
-                        placeholder="eg. nursery name or grafted from plant"
-                        type="input"/>
-                </div>
+                    {/* Plant nickname input */}
+                    <div className="form-group">
+                        <Label title="nickname"></Label>
+                        <Input name="newPlantNickname"
+                            value={this.state.newPlantNickname}
+                            onChange={this.handleInputChange}
+                            placeholder="eg. Lemony Snickett"
+                            type="input"/>
+                    </div>
 
-                {/* Spot Input */}
-                <div className="form-group">
-                    <Label title="spot"></Label>
-                    <Input name="newPlantSpot"
-                        value={this.state.newPlantSpot}
-                        onChange={this.handleInputChange}
-                        placeholder="eg. loungeroom window"
-                        type="input"/>
-                </div>
+                    {/* Last Watered date input */}
+                    <div className="form-group">
+                        <Label title="last watered"></Label>
+                        <DatePicker
+                                name="newPlantLastWatered"
+                                selected={this.state.startDate}
+                                onChange={this.handleChange}
+                                value={this.state.startDate}
+                                dateFormat="dd/MM/yyyy"
+                                className="form-control"
+                            />
+                    </div>
+                    
+                    {/* Watering Cycle options */}
+                    <div className="form-group">
+                        <Label title="watering cycle"></Label>
+                        <Select
+                            value={selectedOption}
+                            name="selectedOption"
+                            onChange={this.handleDropdownChange}
+                            options={this.state.cycleOptions}
+                            />
+                    </div>
 
-                {/* img upload input */}
-                <div className="form-group">
-                    <Label title="upload an image"></Label>
-                    <Input type="file" onChange={this.fileSelectedListener}></Input>
-                </div>
+                    {/* From Input */}
+                    <div className="form-group">
+                        <Label title="from"></Label>
+                        <Input name="newPlantFrom"
+                            value={this.state.newPlantFrom}
+                            onChange={this.handleInputChange}
+                            placeholder="eg. nursery name or grafted from plant"
+                            type="input"/>
+                    </div>
 
-                {/* Submit button to add plant */}
-                <Button
-                    onClick={(event) => this.addNewPlant(event)}
-                    // type="submit"
-                    className="input-lg"
-                    // role="button"
-                    >
-                    add
-                </Button>
-               
+                    {/* Spot Input */}
+                    <div className="form-group">
+                        <Label title="spot"></Label>
+                        <Input name="newPlantSpot"
+                            value={this.state.newPlantSpot}
+                            onChange={this.handleInputChange}
+                            placeholder="eg. loungeroom window"
+                            type="input"/>
+                    </div>
+
+                    {/* img upload input */}
+                    <div className="form-group">
+                        <Label title="upload an image"></Label>
+                        <Input type="file" onChange={this.fileSelectedListener}></Input>
+                    </div>
+
+                    {/* Submit button to add plant */}
+                    <div className="form-group">
+                    <Button
+                        onClick={(event) => this.addNewPlant(event)}
+                        // type="submit"
+                        className="input-lg"
+                        // role="button"
+                        >
+                        add
+                    </Button>
+                    </div>
+
+                </AddPlantContainer> : null }
+                
+
+                <PlantsContainer>
                {/* Display of each plant */}
                 {this.state.plants.length > 0 ? (
                 this.state.plants.map((plant, index) => (
-                    
                     <EachPlantOuter key={index}>
                         <EachPlantCardInner> 
                             <Button
@@ -284,7 +306,7 @@ class MyAccount extends Component {
                     </EachPlantOuter>
                                    
                       ))) : (<h3>no results</h3>)}
-                      
+                </PlantsContainer>
             </div>
   );
 }

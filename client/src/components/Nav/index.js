@@ -1,11 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
 import "./style.css";
 
-function Nav() {
+class Nav extends Component {
+    state = {
+        navBarState: "collapse navbar-collapse hide"
+    };
+
+    componentDidMount() {
+        console.log(this.state.navBarState)
+        this.setState({
+            navBarState: "collapse navbar-collapse hide"
+        })
+        console.log(this.state.navBarState)
+    }
+
+    toggleNavbar = () => {
+        this.state.navBarState === "collapse navbar-collapse hide" ?
+             this.setState({
+                navBarState: "collapse navbar-collapse show"
+            })
+        :
+             this.setState({
+                navBarState: "collapse navbar-collapse hide"
+            })
+    }
+
+render() {
     return (
         <nav className="navbar navbar-expand-lg">
-            <div className="navbar-brand">Logo here</div>
-            <div className="collapse navbar-collapse show" id="navbarSupportedContent">
+            <div className="navbar-brand" onClick={this.toggleNavbar}>
+                <img src={require("../../images/logo.JPG")} alt="logo"></img></div>
+            <div className={this.state.navBarState} id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                     <a className="nav-link" href="/myaccount">My Account</a>
@@ -20,6 +45,8 @@ function Nav() {
             </div>
         </nav>
     )
+}
+
 }
 
 export default Nav;

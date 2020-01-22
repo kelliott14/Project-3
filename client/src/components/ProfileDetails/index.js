@@ -4,7 +4,8 @@ import "./style.css";
 function ProfileDetail(props) {
     return (
         <div className="jumbotron">
-            <h2 className="header">{props.username}</h2>
+            <div className="ohHello">oh, hello <span className="profileName">{props.username}</span>, welcome back!</div>
+            
         </div>
     )
 }

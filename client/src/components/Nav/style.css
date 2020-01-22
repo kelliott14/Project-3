@@ -1,5 +1,5 @@
 .navbar {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Paytone One', sans-serif;
     color: black;
     background-color: #F6F2F5;
 }
@@ -7,4 +7,8 @@
 a {
     text-decoration: none;
     color: black;
+}
+
+img {
+    width: 3rem;
 }
