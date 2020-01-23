@@ -90,10 +90,10 @@ class MyAccount extends Component {
         let thisMoment = new Date(this.state.startDate);
         thisMoment.setDate(thisMoment.getDate() + this.state.selectedOption.numValue);
 
-        
-        const fd = new FormData();
-        fd.append('image', this.state.newPlantImage, this.state.newPlantImage.name)
-        console.log(fd);
+
+        // const fd = new FormData();
+        // fd.append('image', this.state.newPlantImage, this.state.newPlantImage.name)
+        // console.log(fd);
 
         //sets the new plant details into a variable plantToAdd
         let plantToAdd = {
@@ -104,8 +104,8 @@ class MyAccount extends Component {
             nextWater: this.state.selectedOption.numValue,
             spot: this.state.newPlantSpot,
             from: this.state.newPlantFrom,
-            nextWaterDate: thisMoment,
-            img: fd
+            nextWaterDate: thisMoment
+            // img: fd
         };
         //adds the plantToAdd variable to the db
         API.addPlant(this.props.match.params.id, plantToAdd)
@@ -139,6 +139,9 @@ class MyAccount extends Component {
 
     //changes the last watered and next watered dates in db
     waterPlant = (event, id, waterCycle) => {
+        console.log(this.state.id)
+        console.log(id);
+        console.log(waterCycle);
         event.preventDefault();
         let thisMoment = new Date();
         console.log(waterCycle)
@@ -148,9 +151,9 @@ class MyAccount extends Component {
             nextWaterDate: thisMoment,
             lastWatered: new Date()
         };
-        
-        API.updatePlant(id, dateUpdate)
-            .then(res => console.log(res),
+        let thisPlantID = id;
+        API.updatePlant(thisPlantID, dateUpdate)
+            .then(res => console.log(res.data),
             
                 this.loadPlants()
                 )
@@ -158,11 +161,11 @@ class MyAccount extends Component {
     }
 
     //file selected handler
-    fileSelectedListener = event => {
-        this.setState({
-            newPlantImage: event.target.files[0]
-        })
-    }
+    // fileSelectedListener = event => {
+    //     this.setState({
+    //         newPlantImage: event.target.files[0]
+    //     })
+    // }
 
     //toggle the add plant form to collapse or display
     toggleAddPlant = () => {
