@@ -24,5 +24,9 @@ export default {
 
     updatePlant: function(id, plantData) {
         return axios.post("/api/plants/" + id, plantData)
+    },
+
+    deletePlant: function(id) {
+        return axios.delete("/api/plants/" + id)
     }
 };

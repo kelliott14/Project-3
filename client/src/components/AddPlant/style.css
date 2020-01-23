@@ -39,9 +39,14 @@
     text-align: center;
     background-color: #5cb49b;
     padding-bottom: 5.5rem;
+    border-radius: 112px;
 }
 
-.addPlantContainer > label {
+.innerContainer {
+  padding: 2rem;
+}
+
+.input-group > label {
   color: white;
 }
 
@@ -79,7 +84,7 @@ img{
   height: 50px;
   border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
   transform: rotate(-45deg);
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 
 }
 
@@ -98,4 +103,10 @@ img{
 
 .dueForWater {
   background-color: white;
+  border-color: #FF554F;
+}
+
+.close {
+  float: right;
+  margin-right: 0.25rem;
 }

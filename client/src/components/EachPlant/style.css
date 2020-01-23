@@ -8,6 +8,7 @@
 
 .card-title {
     font-size: 1.75rem;
+    margin-bottom: 0;
 }
 
 .fancy {
@@ -24,4 +25,17 @@
 
 .card {
     margin-bottom: 0.5rem;
+}
+
+.card-body {
+    padding: 0.5rem;
+}
+
+.text-muted{
+    float: right;
+    padding-top: 0px;
+}
+
+.card-content {
+    padding-left: 0.75rem
 }

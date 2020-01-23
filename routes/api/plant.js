@@ -5,7 +5,8 @@ router.route("/create")
     .post(plantController.create);
 
 router.route("/:id")
-    .post(plantController.waterPlant);
+    .post(plantController.waterPlant)
+    .delete(plantController.deletePlant);
 
 
 module.exports = router;

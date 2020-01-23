@@ -62,7 +62,7 @@ class MyAccount extends Component {
                     username: res.data.username,
                     id: res.data._id,
                     plants: res.data.plants
-            }, console.log(this.state)))
+            }))
             .catch(err => console.log(err))
     };
 
@@ -76,8 +76,8 @@ class MyAccount extends Component {
                 username: res.data.username,
                 id: res.data.id,
                 plants: res.data.plants
-            }, console.log(this.state)))
-            .catch(err => console.log(err), console.log(this.state));
+            }))
+            .catch(err => console.log(err));
             
     }
 
@@ -152,8 +152,7 @@ class MyAccount extends Component {
         };
         let thisPlantID = id;
         API.updatePlant(thisPlantID, dateUpdate)
-            .then(res => console.log(res.data),
-            
+            .then(res =>           
                 this.loadPlants()
                 )
             .catch(err => console.log(err))
@@ -175,13 +174,20 @@ class MyAccount extends Component {
     setWateredType = (lastWateredDate, nextWaterDate) => {
         if(new Date(lastWateredDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
             return "input-lg waterBtn watered"
-        } else if (new Date(nextWaterDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
+        } else if (new Date(nextWaterDate).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0)) {
             return "input-lg waterBtn dueForWater"
         } else {
             return "input-lg waterBtn unwatered"
-        }
-            
+        }            
     }
+
+    //delete plant
+    deletePlant = (event, id) => {
+        event.preventDefault();
+        API.deletePlant(id)
+            .then(res => this.loadPlants())
+            .catch(err => console.log(err))
+    };
     
     
     //page render
@@ -194,7 +200,7 @@ class MyAccount extends Component {
             thisWeek : 'dddd',
             lastWeek : '[last] dddd',
             nextWeek : 'dddd',
-            sameElse : 'DD/MM/YYYY'
+            sameElse : 'on DD-MMM'
         };
 
         return (
@@ -208,84 +214,84 @@ class MyAccount extends Component {
                     <SlideDown className={'my-dropdown-slidedown'}>
                         {this.state.open ? 
                         <AddPlantContainer className={this.state.open}>
+                            <div className="innerContainer">
+                            {/* Plant name input */}
+                            <div className="form-group">
+                                <Label title="plant name"></Label>
+                                <Input 
+                                    name="newPlantName"
+                                    value={this.state.newPlantName}
+                                    onChange={this.handleInputChange}
+                                    placeholder="eg. lemon tree"
+                                    />
+                            </div>
 
-                        {/* Plant name input */}
-                        <div className="form-group">
-                            <Label title="plant name"></Label>
-                            <Input 
-                                name="newPlantName"
-                                value={this.state.newPlantName}
-                                onChange={this.handleInputChange}
-                                placeholder="eg. lemon tree"
-                                />
-                        </div>
+                            {/* Plant nickname input */}
+                            <div className="form-group">
+                                <Label title="nickname"></Label>
+                                <Input name="newPlantNickname"
+                                    value={this.state.newPlantNickname}
+                                    onChange={this.handleInputChange}
+                                    placeholder="eg. Lemony Snickett"
+                                    type="input"/>
+                            </div>
 
-                        {/* Plant nickname input */}
-                        <div className="form-group">
-                            <Label title="nickname"></Label>
-                            <Input name="newPlantNickname"
-                                value={this.state.newPlantNickname}
-                                onChange={this.handleInputChange}
-                                placeholder="eg. Lemony Snickett"
-                                type="input"/>
-                        </div>
+                            {/* Last Watered date input */}
+                            <div className="form-group">
+                                <Label title="last watered"></Label>
+                                <DatePicker
+                                        name="newPlantLastWatered"
+                                        selected={this.state.startDate}
+                                        onChange={this.handleChange}
+                                        value={this.state.startDate}
+                                        dateFormat="dd/MM/yyyy"
+                                        className="form-control"
+                                    />
+                            </div>
+                            
+                            {/* Watering Cycle options */}
+                            <div className="form-group">
+                                <Label title="watering cycle"></Label>
+                                <Select
+                                    value={selectedOption}
+                                    name="selectedOption"
+                                    onChange={this.handleDropdownChange}
+                                    options={this.state.cycleOptions}
+                                    />
+                            </div>
 
-                        {/* Last Watered date input */}
-                        <div className="form-group">
-                            <Label title="last watered"></Label>
-                            <DatePicker
-                                    name="newPlantLastWatered"
-                                    selected={this.state.startDate}
-                                    onChange={this.handleChange}
-                                    value={this.state.startDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    className="form-control"
-                                />
-                        </div>
-                        
-                        {/* Watering Cycle options */}
-                        <div className="form-group">
-                            <Label title="watering cycle"></Label>
-                            <Select
-                                value={selectedOption}
-                                name="selectedOption"
-                                onChange={this.handleDropdownChange}
-                                options={this.state.cycleOptions}
-                                />
-                        </div>
+                            {/* From Input */}
+                            <div className="form-group">
+                                <Label title="from"></Label>
+                                <Input name="newPlantFrom"
+                                    value={this.state.newPlantFrom}
+                                    onChange={this.handleInputChange}
+                                    placeholder="eg. nursery name or grafted from plant"
+                                    type="input"/>
+                            </div>
 
-                        {/* From Input */}
-                        <div className="form-group">
-                            <Label title="from"></Label>
-                            <Input name="newPlantFrom"
-                                value={this.state.newPlantFrom}
-                                onChange={this.handleInputChange}
-                                placeholder="eg. nursery name or grafted from plant"
-                                type="input"/>
-                        </div>
+                            {/* Spot Input */}
+                            <div className="form-group">
+                                <Label title="spot"></Label>
+                                <Input name="newPlantSpot"
+                                    value={this.state.newPlantSpot}
+                                    onChange={this.handleInputChange}
+                                    placeholder="eg. loungeroom window"
+                                    type="input"/>
+                            </div>
 
-                        {/* Spot Input */}
-                        <div className="form-group">
-                            <Label title="spot"></Label>
-                            <Input name="newPlantSpot"
-                                value={this.state.newPlantSpot}
-                                onChange={this.handleInputChange}
-                                placeholder="eg. loungeroom window"
-                                type="input"/>
+                            {/* Submit button to add plant */}
+                            <div className="form-group">
+                            <Button
+                                onClick={(event) => this.addNewPlant(event)}
+                                type="submit"
+                                className="addPlantBtn"
+                                role="button"
+                                >
+                                add
+                            </Button>
+                            </div>
                         </div>
-
-                        {/* Submit button to add plant */}
-                        <div className="form-group">
-                        <Button
-                            onClick={(event) => this.addNewPlant(event)}
-                            type="submit"
-                            className="addPlantBtn"
-                            role="button"
-                            >
-                            add
-                        </Button>
-                        </div>
-
                     </AddPlantContainer> : null}
                     
                 </SlideDown>
@@ -296,6 +302,11 @@ class MyAccount extends Component {
                 this.state.plants.map((plant, index) => (
                     <EachPlantOuter key={index}>
                         <EachPlantCardInner> 
+                            <button type="button" className="close" aria-label="Close" 
+                                    onClick={(event) => this.deletePlant(event, plant._id)}>
+                                    <span aria-hidden="true">&times;</span>
+                            </button>
+
                             <Button
                                 onClick={(event) => this.waterPlant(event, plant._id, plant.nextWater)}
                                 type="submit"
@@ -317,13 +328,12 @@ class MyAccount extends Component {
                                     </div>
                                 </div>
 
-                                <div className="card-body">
-                                    <div className="card-subtitle">is found here: 
+                                <div className="card-body text-muted">
+                                <div>came from: 
+                                    <span> {plant.from} </span>
+                                        and lives: 
                                         <span> {plant.spot} </span>
                                     </div>   
-                                <div className="card-subtitle">and came from : 
-                                    <span> {plant.from} </span>
-                                </div>
                                 </div>
 
                     </EachPlantCardInner>
