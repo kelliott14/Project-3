@@ -50,4 +50,5 @@ input,
 .movingButton {
     background-color: #F6F2F5;
     padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
 }

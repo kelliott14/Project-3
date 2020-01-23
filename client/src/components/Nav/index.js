@@ -7,11 +7,9 @@ class Nav extends Component {
     };
 
     componentDidMount() {
-        console.log(this.state.navBarState)
         this.setState({
             navBarState: "collapse navbar-collapse hide"
         })
-        console.log(this.state.navBarState)
     }
 
     toggleNavbar = () => {
@@ -29,18 +27,15 @@ render() {
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="navbar-brand" onClick={this.toggleNavbar}>
-                <img src={require("../../images/logo.JPG")} alt="logo"></img></div>
+                <img src={require("../../images/logoNoBG.png")} alt="logo"></img></div>
             <div className={this.state.navBarState} id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <a className="nav-link" href="/myaccount">My Account</a>
+                    <a className="nav-link" href="/myaccount/:id">My Account</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="/myplants">My Plants</a>
-                </li> 
-                <li className="nav-item">
-                    <a className="nav-link" href="/myreminders">My Reminders</a>
-                </li>               
+                    <a className="nav-link" href="/">Log Out</a>
+                </li>             
                 </ul>
             </div>
         </nav>

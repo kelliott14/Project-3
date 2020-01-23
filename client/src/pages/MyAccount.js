@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
+import Nav from "../components/Nav";
 import { Input, Label, Button, MovingButton, AddPlantContainer } from "../components/AddPlant";
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
@@ -183,7 +184,7 @@ class MyAccount extends Component {
 
         return (
             <div>
-                <Jumbo header="My Profile"/>
+                <Nav />
                 <ProfileDetails username={this.state.username}/>
                 <Jumbo header="My plants"/>
 
