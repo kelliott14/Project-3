@@ -90,11 +90,6 @@ class MyAccount extends Component {
         let thisMoment = new Date(this.state.startDate);
         thisMoment.setDate(thisMoment.getDate() + this.state.selectedOption.numValue);
 
-
-        // const fd = new FormData();
-        // fd.append('image', this.state.newPlantImage, this.state.newPlantImage.name)
-        // console.log(fd);
-
         //sets the new plant details into a variable plantToAdd
         let plantToAdd = {
             plant_name: this.state.newPlantName,
@@ -159,13 +154,6 @@ class MyAccount extends Component {
                 )
             .catch(err => console.log(err))
     }
-
-    //file selected handler
-    // fileSelectedListener = event => {
-    //     this.setState({
-    //         newPlantImage: event.target.files[0]
-    //     })
-    // }
 
     //toggle the add plant form to collapse or display
     toggleAddPlant = () => {
@@ -266,12 +254,6 @@ class MyAccount extends Component {
                             onChange={this.handleInputChange}
                             placeholder="eg. loungeroom window"
                             type="input"/>
-                    </div>
-
-                    {/* img upload input */}
-                    <div className="form-group">
-                        <Label title="upload an image"></Label>
-                        <Input type="file" onChange={this.fileSelectedListener}></Input>
                     </div>
 
                     {/* Submit button to add plant */}

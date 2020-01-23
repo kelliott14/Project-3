@@ -45,7 +45,7 @@ export function MovingButton(props) {
     <div className={props.className}>
     <div className="circle" onClick={props.onClick}>
       <div className="text">{props.text}</div>
-      <div className="arrow">V</div>
+      <img className="arrow" src={require("../../images/collapseIcon.png")} alt="arrow"></img>
     </div>
     </div>
   )
