@@ -5,6 +5,7 @@ function Jumbo(props) {
     return (
         <div className="jumbotron">
             <h1 className="header">{props.header}</h1>
+            <p className="biline">{props.biline}</p>
         </div>
     )
 }

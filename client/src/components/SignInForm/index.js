@@ -59,7 +59,7 @@ class SignInForm extends Component {
                                 name="logInPassword"
                                 type="password" className="form-control" id="Input"></input>
                         </div>
-                        <button type="submit" className="btn"
+                        <button type="submit" className="btn signInBtn"
                                 onClick={this.handleFormSubmit}>log in</button>
                     </form>
                     
@@ -81,7 +81,7 @@ class SignInForm extends Component {
                                 name="newPassword"
                                 type="password" className="form-control" id="newPasswordInput"></input>
                     </div>
-                    <button type="submit" className="btn" 
+                    <button type="submit" className="btn signInBtn" 
                         onClick={this.newUser}>create</button>
                 </form>
                 

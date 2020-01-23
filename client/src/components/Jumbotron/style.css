@@ -2,11 +2,16 @@
     text-align: center;
     background-color: #F6F2F5;
     margin-bottom: 0px;
+    text-align: center;
 }
 
 .header{
     color: #5cb49b;
-    text-align: left;
+    text-align: center;
     font-family: 'Paytone One', sans-serif;
     font-size: 4rem;
+}
+
+.biline {
+    font-size: 1.5rem;
 }

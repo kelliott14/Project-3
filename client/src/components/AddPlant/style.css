@@ -1,6 +1,6 @@
 .circle {
     width: 4rem;
-    height: 4.5rem;
+    height: 4rem;
     padding-right: 0.5rem;
     background-color: #5cb49b;
     border-radius: 60px;
@@ -38,7 +38,11 @@
     padding: 1rem;
     text-align: center;
     background-color: #5cb49b;
-    font: white;
+    padding-bottom: 5.5rem;
+}
+
+.addPlantContainer > label {
+  color: white;
 }
 
 .form-control,
@@ -51,4 +55,47 @@ input,
     background-color: #F6F2F5;
     padding-bottom: 0.25rem;
     padding-left: 0.25rem;
+}
+
+img{
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.25rem;
+}
+
+.addPlantBtn {
+  background-color: white;
+  color: #3C7565;
+  font-weight: 600;
+  border-radius: 60px;
+}
+
+.waterBtn {
+  background-color: white;
+  color: white;
+  border: 3px solid #5FC4E8;
+  margin: 1rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  transform: rotate(-45deg);
+  margin-top: 2rem;
+
+}
+
+.waterBtn:hover {
+  background-color: #5FC4E8;
+}
+
+.watered {
+  background-color: #5FC4E8;
+  
+}
+
+.unwatered {
+  background-image: linear-gradient(-140deg, white 25%, #5FC4E8);
+}
+
+.dueForWater {
+  background-color: white;
 }

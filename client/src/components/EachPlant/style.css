@@ -1,6 +1,27 @@
 .plantsContainer {
     padding: 1rem;
+    padding-top: 3rem;
     text-align: center;
     background-color: #F6F2F5;
-    
+    height: 100vh;
+}
+
+.card-title {
+    font-size: 1.75rem;
+}
+
+.fancy {
+    font-family: 'Pacifico', cursive;
+}
+
+.script {
+    font-family: 'Paytone One', sans-serif;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.card {
+    margin-bottom: 0.5rem;
 }
