@@ -85,13 +85,16 @@ class MyAccount extends Component {
     //add plant to db
     addNewPlant = (event) => {
         event.preventDefault();
+
         //sets the next water date into a variable thisMoment
         let thisMoment = new Date(this.state.startDate);
         thisMoment.setDate(thisMoment.getDate() + this.state.selectedOption.numValue);
 
+        
         const fd = new FormData();
         fd.append('image', this.state.newPlantImage, this.state.newPlantImage.name)
         console.log(fd);
+
         //sets the new plant details into a variable plantToAdd
         let plantToAdd = {
             plant_name: this.state.newPlantName,
