@@ -5,7 +5,6 @@ import { Input, Label, Button, MovingButton, AddPlantContainer } from "../compon
 import ProfileDetails from "../components/ProfileDetails";
 import API from "../utils/API";
 import { EachPlantOuter, EachPlantCardInner, PlantsContainer } from "../components/EachPlant";
-// import axios from "axios";
 
 //External library DatePicker for calendar field
 import DatePicker from "react-datepicker";
@@ -34,12 +33,18 @@ class MyAccount extends Component {
         newPlantCycle: "",
         newPlantSpot: "",
         newPlantFrom: "",
-        newPlantImage: null,
         selectedOption: null,
         cycleOptions: [{ value: "daily", label: "daily", numValue: 1},
                         {value: "weekly", label: "weekly", numValue: 7},
                         {value: "fortnightly", label: "fortnightly", numValue: 14},
-                        {value: "monthly", label: "monthly", numValue: 30}]
+                        {value: "monthly", label: "monthly", numValue: 30}],
+        errors: {
+            newPlantName: "error",
+            newPlantNickname: "error",
+            newPlantCycle: "error",
+            newPlantSpot: "error",
+            newPlantFrom: "error"
+        }
     };
 
     //handle change for startdate field
@@ -51,6 +56,14 @@ class MyAccount extends Component {
 
     //handle change for dropdown field
     handleDropdownChange = selectedOption => {
+        let errors = this.state.errors;
+
+        errors.newPlantCycle = selectedOption.length < 2
+                  ? "you've missed this field"
+                  : '';
+
+        this.setState({errors, newPlantCycle: selectedOption}, ()=> {
+        })
         this.setState({ selectedOption });
     }
 
@@ -106,7 +119,7 @@ class MyAccount extends Component {
             spot: this.state.newPlantSpot,
             from: this.state.newPlantFrom,
             nextWaterDate: thisMoment
-            // img: fd
+            
         };
         //adds the plantToAdd variable to the db
         API.addPlant(this.props.match.params.id, plantToAdd)
@@ -124,7 +137,15 @@ class MyAccount extends Component {
                     newPlantCycle: "",
                     newPlant: {},
                     newPlantSpot: "",
-                    newPlantFrom: ""
+                    newPlantFrom: "",
+                    selectedOption: null,
+                    errors: {
+                        newPlantName: "error",
+                        newPlantNickname: "error",
+                        newPlantCycle: "error",
+                        newPlantSpot: "error",
+                        newPlantFrom: "error"
+                    }
                 })))
             .catch(err => console.log(err))
 
@@ -132,10 +153,17 @@ class MyAccount extends Component {
 
     //handle input change on input fields
     handleInputChange = event => {
+        event.preventDefault();
         const { name, value } = event.target;
-        this.setState({
-          [name]: value
-        });
+        let errors = this.state.errors;
+
+        errors[name] = value.length < 2
+                  ? "you've missed this field"
+                  : '';
+
+        this.setState({errors, [name]: value}, ()=> {
+        })
+
       };
 
     //changes the last watered and next watered dates in db
@@ -189,6 +217,17 @@ class MyAccount extends Component {
             .catch(err => console.log(err))
     };
     
+    //validate form for submission
+    enableSubmit = () => {
+        let valid = false;
+        Object.values(this.state.errors).forEach(
+          (val) => val.length > 0 && (valid = true)
+        );
+
+        return valid
+        
+    }
+    
     
     //page render
     render() {
@@ -202,6 +241,7 @@ class MyAccount extends Component {
             nextWeek : 'dddd',
             sameElse : 'on DD-MMM'
         };
+        const {errors} = this.state;
 
         return (
             <div>
@@ -287,6 +327,7 @@ class MyAccount extends Component {
                                 type="submit"
                                 className="addPlantBtn"
                                 role="button"
+                                disabled={this.enableSubmit()}
                                 >
                                 add
                             </Button>
@@ -338,7 +379,7 @@ class MyAccount extends Component {
 
                     </EachPlantCardInner>
                     </EachPlantOuter>
-                                   
+                    
                       ))) : (<h3>no plants yet, huh? That's ok. Just click on the arrow to start adding!</h3>)}
                 </PlantsContainer>
             </div>

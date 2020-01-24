@@ -1,21 +1,25 @@
 .jumbotron{
     text-align: center;
-    /* background: transparent; */
+    background: transparent;
     margin-bottom: 0px;
 }
 
 .signInForm{
     padding-bottom: 2rem;
-    background-color: #F6F2F5;
+    background-color: rgb(247, 243, 246);
     font-family: 'Poppins', sans-serif;
-    /* background-image: url("../../images/logoNoBG.png"); */
+    background-image: url("../../images/logoBeige.jpg");
+    background-size: 75rem;
+    background-repeat: no-repeat;
 }
 
 .loginHeader{
     color: #5cb49b;
+    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
     text-align: left;
     font-family: 'Paytone One', sans-serif;
     margin-bottom: 1rem;
+    font-size: 3rem;
 }
 
 .form-group{
@@ -39,3 +43,15 @@
     border-radius: 60px;
 }
 
+.error {
+    color: #FF554F;
+    font-size: 0.75rem;
+    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
+}
+
+.form-group > label {
+    color: #3C7565;
+    font-weight: 800;
+    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
+    font-size: 1.5rem;
+}

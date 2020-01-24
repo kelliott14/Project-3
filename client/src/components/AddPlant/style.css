@@ -88,9 +88,6 @@ img{
 
 }
 
-.waterBtn:hover {
-  background-color: #5FC4E8;
-}
 
 .watered {
   background-color: #5FC4E8;
@@ -109,4 +106,15 @@ img{
 .close {
   float: right;
   margin-right: 0.25rem;
+}
+
+.waterBtn:hover {
+  background-color: #5ec3e8;
+  background-image: none;
+  border-color: #5FC4E8;
+}
+
+.errorAdd {
+    color: #FF554F;
+    font-size: 0.75rem;
 }

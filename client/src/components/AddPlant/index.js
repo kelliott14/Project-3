@@ -32,9 +32,9 @@ export function Dropdown(props) {
     );
 }
 
-export function Button({ type = "default", className, children, onClick }) {
+export function Button({ type = "default", className, children, onClick, disabled }) {
     return (
-      <button onClick={onClick} className={["btn btn-lg", `btn-${type}`, className].join(" ")}>
+      <button onClick={onClick} className={["btn btn-lg", `btn-${type}`, className].join(" ")} disabled={disabled}>
         {children}
       </button>
     );
