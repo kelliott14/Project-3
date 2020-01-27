@@ -80,11 +80,9 @@ class SignInForm extends Component {
                         <Jumbo biline="Looks like you might be new here, did you want to try creating a new account instead? Or you can try to login again."></Jumbo>
                         : null}
                 </div>
-                <div className="panel panel-default">
-                </div>
 
                 <div className="signInForm">
-                    <div className="jumbotron">
+                    <div className="jumbotron loginBubble">
                         <form className="logInForm">
                             <h2 className="loginHeader">log in to an existing account</h2>
                             <div className="form-group">
@@ -110,7 +108,7 @@ class SignInForm extends Component {
                         </form>
                         
                     </div>
-                    <div className="jumbotron">
+                    <div className="jumbotron loginBubble">
                     <form className="createUserForm">
                         <h2 className="loginHeader">create a new account</h2>
                         <div className="form-group">

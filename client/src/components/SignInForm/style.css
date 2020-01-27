@@ -11,11 +11,11 @@
     background-image: url("../../images/logoBeige.jpg");
     background-size: 75rem;
     background-repeat: no-repeat;
+    background-position: top;
 }
 
 .loginHeader{
-    color: #5cb49b;
-    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
+    color: white;
     text-align: left;
     font-family: 'Paytone One', sans-serif;
     margin-bottom: 1rem;
@@ -24,6 +24,7 @@
 
 .form-group{
     text-align: left;
+    margin-bottom: 1rem;
 }
 
 .btn{
@@ -32,26 +33,31 @@
     padding: 1.25rem
 }
 
-.createUserForm{
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
 
 .signInBtn {
-    background-color: #5cb49b;
-    color: white;
+    background-color: white;
+    color: rgb(91, 179, 154);
     border-radius: 60px;
 }
 
 .error {
-    color: #FF554F;
+    color: black;
     font-size: 0.75rem;
-    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
+    padding-left: 0.5rem;
 }
 
 .form-group > label {
-    color: #3C7565;
+    color: white;
     font-weight: 800;
-    text-shadow: -2px 0 #F6F2F5, 0 2px #F6F2F5, 2px 0 #F6F2F5, 0 -2px #F6F2F5;
     font-size: 1.5rem;
+}
+
+.loginBubble {
+    background-color: rgb(91, 179, 154, 0.9);
+    border-radius: 125px;
+    height: 30rem;
+    margin: 2rem;
+    padding-top: 3rem;
+    padding-left: 3rem;
+    
 }

@@ -14,7 +14,7 @@ class MyAccount extends Component {
     render() {
         return (
             <div>
-                <Jumbo header="Welcome to plant saver." biline="do a little dance, save your little plants"/>
+                <Jumbo header="Welcome to plant saver." biline="do a little dance, save your little plants" className="firstPage"/>
                 <SignInForm></SignInForm>
             </div>
   );
