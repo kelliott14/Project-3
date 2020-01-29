@@ -3,7 +3,7 @@ import "./style.css";
 
 export function EachPlantOuter({ children}) {
     return (
-        <div className="card" >{children}</div>
+        <div className="card eachPlantCard" >{children}</div>
     )
 }
 

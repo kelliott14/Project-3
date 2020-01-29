@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Jumbo from "../components/Jumbotron";
 import Nav from "../components/Nav";
 import { Input, Label, Button, MovingButton, AddPlantContainer } from "../components/AddPlant";
-import ProfileDetails from "../components/ProfileDetails";
+import { ProfileDetails, Info } from "../components/ProfileDetails";
 import API from "../utils/API";
 import { EachPlantOuter, EachPlantCardInner, PlantsContainer } from "../components/EachPlant";
 
@@ -241,7 +241,7 @@ class MyAccount extends Component {
             nextWeek : 'dddd',
             sameElse : 'on DD-MMM'
         };
-        const {errors} = this.state;
+        
 
         return (
             <div>
@@ -338,6 +338,8 @@ class MyAccount extends Component {
                 </SlideDown>
 
                 <PlantsContainer>
+                    <Info></Info>
+                    
                {/* Display of each plant */}
                 {this.state.plants.length > 0 ? (
                 this.state.plants.map((plant, index) => (
@@ -371,9 +373,9 @@ class MyAccount extends Component {
 
                                 <div className="card-body text-muted">
                                 <div>came from: 
-                                    <span> {plant.from} </span>
+                                    <span className="badge badge-light"> {plant.from} </span>
                                         and lives: 
-                                        <span> {plant.spot} </span>
+                                        <span className="badge badge-light"> {plant.spot} </span>
                                     </div>   
                                 </div>
 

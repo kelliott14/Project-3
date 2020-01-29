@@ -82,9 +82,10 @@ class SignInForm extends Component {
                 </div>
 
                 <div className="signInForm">
-                    <div className="jumbotron loginBubble">
+
+                    <div className="card loginBubble">
                         <form className="logInForm">
-                            <h2 className="loginHeader">log in to an existing account</h2>
+                            <h2 className="loginHeader card-title">log in to an existing account</h2>
                             <div className="form-group">
                                 <label>username</label>
                                 <input value={this.state.logInUsername}
@@ -106,11 +107,11 @@ class SignInForm extends Component {
                             <button type="submit" className="btn signInBtn"
                                     onClick={this.handleFormSubmit}>log in</button>
                         </form>
-                        
                     </div>
-                    <div className="jumbotron loginBubble">
+
+                    <div className="card loginBubble">
                     <form className="createUserForm">
-                        <h2 className="loginHeader">create a new account</h2>
+                        <h2 className="loginHeader card-title">create a new account</h2>
                         <div className="form-group">
                             <label>username</label>
                             <input value={this.state.newUsername}

@@ -25,6 +25,12 @@
 
 .card {
     margin-bottom: 0.5rem;
+    
+}
+
+.eachPlantCard {
+    border-color: #5cb49b;
+    border-width: 2px;
 }
 
 .card-body {
@@ -34,8 +40,17 @@
 .text-muted{
     float: right;
     padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .card-content {
-    padding-left: 0.75rem
+    padding: 0.75rem;
+}
+
+.badge {
+    margin: 0.5rem;
+}
+
+.card {
+    border-radius: 40px;
 }

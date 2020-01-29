@@ -1,7 +1,10 @@
-.jumbotron{
+.profileCard{
     text-align: center;
-    background-color: #F6F2F5;
+    background-color: transparent;
     margin-bottom: 0px;
+    border: none;
+    padding: 2rem;
+    margin-top: 2rem;
 }
 
 .profileName{
@@ -16,4 +19,27 @@
     text-align: left;
     font-size: 3rem;
     font-family: 'Pacifico', cursive;
+}
+
+img {
+    float: left;
+    height: 1.2rem;
+    width: 1rem;
+}
+
+p {
+    float: left;
+    font-size: 0.9rem;
+}
+
+.infoCard {
+    background-color: transparent;
+    border: none;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.instructions {
+    margin-top: -0.5rem;
+    font-size: 0.9rem;
 }

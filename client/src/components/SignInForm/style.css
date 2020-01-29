@@ -19,7 +19,8 @@
     text-align: left;
     font-family: 'Paytone One', sans-serif;
     margin-bottom: 1rem;
-    font-size: 3rem;
+    font-size: 2rem;
+    text-shadow: 2px 2px #3d7666;
 }
 
 .form-group{
@@ -38,6 +39,7 @@
     background-color: white;
     color: rgb(91, 179, 154);
     border-radius: 60px;
+    font-weight: 600;
 }
 
 .error {
@@ -48,16 +50,14 @@
 
 .form-group > label {
     color: white;
-    font-weight: 800;
     font-size: 1.5rem;
+    text-shadow: 1px 1px #3d7666;
 }
 
 .loginBubble {
-    background-color: rgb(91, 179, 154, 0.9);
+    background-color: hsla(163, 37%, 53%, 0.902);
     border-radius: 125px;
-    height: 40rem;
     margin: 1rem;
-    padding-top: 4rem;
-    padding-left: 3rem;
+    padding: 3rem;
     
 }
