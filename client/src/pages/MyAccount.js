@@ -34,6 +34,7 @@ class MyAccount extends Component {
         newPlantSpot: "",
         newPlantFrom: "",
         selectedOption: null,
+        selectedSortOption: null,
         cycleOptions: [{ value: "daily", label: "daily", numValue: 1},
                         {value: "weekly", label: "weekly", numValue: 7},
                         {value: "fortnightly", label: "fortnightly", numValue: 14},
@@ -44,7 +45,8 @@ class MyAccount extends Component {
             newPlantCycle: "error",
             newPlantSpot: "error",
             newPlantFrom: "error"
-        }
+        },
+        selectedFromSort: []
     };
 
     //handle change for startdate field
@@ -67,6 +69,16 @@ class MyAccount extends Component {
         this.setState({ selectedOption });
     }
 
+    //handles change on filter sort
+    handleSortChange = selectedSortOption => {
+        const  newPlants = this.state.plants.filter(plant => plant.from === selectedSortOption)
+        console.log(selectedSortOption)
+        this.setState({
+            plants: newPlants
+        },
+        console.log(newPlants));
+    }
+
     //on load of page
     componentDidMount = () => {
         API.getUserData(this.props.match.params.id)
@@ -75,23 +87,42 @@ class MyAccount extends Component {
                     username: res.data.username,
                     id: res.data._id,
                     plants: res.data.plants
-            }))
+            }, () => {
+                this.setFromDropdown();
+            })) 
             .catch(err => console.log(err))
     };
 
     //load plants from user into state
     loadPlants = () => {
-        
         API.getUserData(this.props.match.params.id)
             .then(res => 
                 this.setState({
                 open: false,
                 username: res.data.username,
                 id: res.data.id,
-                plants: res.data.plants
+                plants: res.data.plants,
+            }, () => {
+                this.setFromDropdown()
             }))
             .catch(err => console.log(err));
             
+    }
+
+    //sets dropdown filter
+    setFromDropdown = () => {
+        var push = [];
+        this.state.plants.forEach(plant => {
+            let eachOne = {value: plant.from,
+                label: plant.from}
+            push.push(eachOne)
+        });
+        this.setState({
+            selectedFromSort: push
+        }, () => {
+            console.log(this.state.selectedFromSort)
+
+        });
     }
 
     //delete user's profile
@@ -121,6 +152,7 @@ class MyAccount extends Component {
             nextWaterDate: thisMoment
             
         };
+
         //adds the plantToAdd variable to the db
         API.addPlant(this.props.match.params.id, plantToAdd)
             .then(res => 
@@ -160,7 +192,6 @@ class MyAccount extends Component {
         errors[name] = value.length < 2
                   ? "you've missed this field"
                   : '';
-
         this.setState({errors, [name]: value}, ()=> {
         })
 
@@ -232,6 +263,8 @@ class MyAccount extends Component {
     //page render
     render() {
         const { selectedOption } = this.state;
+        const { selectedSortOption } = this.state;
+
         const calendarStrings = {
             lastDay : '[yesterday]',
             sameDay : '[today]',
@@ -340,6 +373,13 @@ class MyAccount extends Component {
                 <PlantsContainer>
                     <Info></Info>
                     
+                    {/* <Select
+                        value={selectedSortOption}
+                        name="fromSort"
+                        onChange={(selectedSortOption) => this.handleSortChange(selectedSortOption.value)}
+                        options={this.state.selectedFromSort}
+                        /> */}
+
                {/* Display of each plant */}
                 {this.state.plants.length > 0 ? (
                 this.state.plants.map((plant, index) => (

@@ -15,6 +15,7 @@ class MyAccount extends Component {
         return (
             <div>
                 <Jumbo header="Welcome to plant saver." biline="do a little dance, save your little plants" className="firstPage"/>
+                <h3 className="hint lead display-4">Hint: are you here for a demo? Use "demo" as the username and password ;) </h3>
                 <SignInForm></SignInForm>
             </div>
   );

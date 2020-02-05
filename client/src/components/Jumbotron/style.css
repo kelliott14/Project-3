@@ -19,3 +19,14 @@
     background-size: 75rem;
     background-repeat: no-repeat;
 }
+
+.biline {
+    text-align: center;
+    font-size: 1rem;
+    
+}
+
+.hint {
+    text-align: center;
+    font-size: 0.75rem;
+}
